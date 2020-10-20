@@ -15,8 +15,8 @@ public class BasicTestObject {
     public static final String CONF_LAZADA_PROPERTIES = "conf/lazada.properties";
     static Logger logger = LogManager.getLogger(BasicTestObject.class);
 
-    protected WebDriver webDriver;
-
+    protected static WebDriver webDriver;
+    private DriverConnection driverConnection = null;
     public static Properties properties;
 
     static {
@@ -33,7 +33,8 @@ public class BasicTestObject {
      */
     @BeforeMethod(alwaysRun = true)
     public void initializeBaseSetup() throws Exception{
-        webDriver = DriverConnection.getWebBrowserInstance();
+        driverConnection = new DriverConnection();
+        webDriver = driverConnection.getWebBrowserInstance();
     }
 
     /**
@@ -57,6 +58,6 @@ public class BasicTestObject {
      */
     @AfterMethod(alwaysRun = true)
     public void tearDown() throws Exception {
-        DriverConnection.closeDriver();
+        driverConnection.closeDriver();
     }
 }

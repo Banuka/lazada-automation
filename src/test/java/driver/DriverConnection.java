@@ -15,13 +15,13 @@ import static base.BasicTestObject.properties;
 
 public class DriverConnection {
     static Logger logger = LogManager.getLogger(DriverConnection.class);
-    private static WebDriver driver;
+    private WebDriver driver;
 
     /**
      * Initiate Specific Browser Instance
      *
      */
-    public static WebDriver getWebBrowserInstance()throws Exception{
+    public WebDriver getWebBrowserInstance()throws Exception{
         try {
             switch (properties.getProperty(Configurations.BROWSER)) {
                 case "chrome":
@@ -51,7 +51,7 @@ public class DriverConnection {
         return driver;
     }
 
-    private static WebDriver initChromeDriver()throws Throwable{
+    private WebDriver initChromeDriver()throws Throwable{
         System.setProperty("webdriver.chrome.driver", DriverConnection.class.getClassLoader().getResource("drivers/chromedriver.exe").getPath());
         DesiredCapabilities capability = DesiredCapabilities.chrome();
         capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
@@ -62,7 +62,7 @@ public class DriverConnection {
         return driver;
     }
 
-    private static WebDriver initFirefoxDriver()throws Throwable{
+    private WebDriver initFirefoxDriver()throws Throwable{
         System.setProperty("webdriver.gecko.driver", "resources/drivers/geckodriver");
         driver = new FirefoxDriver();
         return driver;
@@ -73,7 +73,7 @@ public class DriverConnection {
      *
      * @throws Exception
      */
-    public static void closeDriver() throws Exception {
+    public void closeDriver() throws Exception {
         if (!properties.getProperty(Configurations.BROWSER).equals("firefox")) {
             driver.close();
         }
